@@ -1,0 +1,61 @@
+# Learning by drugs
+
+## Untitled
+
+```elixir
+import IEx.Helpers
+```
+
+```elixir
+import Ecto.Query
+```
+
+## Creating Data
+
+```elixir
+alias FiveGram.Products.Product
+alias FiveGram.Repo
+```
+
+Structs are Maps, all Ecto schemas are Structs
+
+```elixir
+# Empty map
+%{}
+```
+
+structs are initialized the same way as maps, except that you have to put the name of the struct between the
+percent sign (`%`) and curly braces (`{}`)
+
+```elixir
+# Empty Product struct 
+empty_product = %Product{}
+```
+
+the name of the struct is just a field on the map and we can pattern match on it.
+
+```elixir
+%module{} = empty_product
+module
+```
+
+The textbook way of creating data in a database is by initializing an empty struct, passing to a changeset with 
+some input data and inserting it into a database using `Repo.insert/1` or `Repo.insert!/1` (this one throws an exception in case of an error)
+
+```elixir
+%Product{}
+|> Product.changeset(%{
+  name: "koks",
+  description: "kopie mocno",
+  price: 300
+})
+|> Repo.insert()
+```
+
+## Querying data
+
+```elixir
+from(p in Product)
+|> last
+|> Repo.one()
+```
